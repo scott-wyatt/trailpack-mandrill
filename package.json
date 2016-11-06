@@ -18,8 +18,10 @@
     "trailjs"
   ],
   "dependencies": {
+    "joi": "^9.0.4",
     "mandrill-api": "^1.0.45",
-    "trailpack": "latest"
+    "trailpack": "latest",
+    "trails-service": "^1.0.0-beta-2"
   },
   "devDependencies": {
     "lodash": "^4.11.1",
@@ -39,6 +41,6 @@
   "eslintConfig": {
     "extends": "trails"
   },
-  "repository": "git@github.com:CaliStyle/jooseontap-auth.git",
+  "repository": "git@github.com:scott-wyatt/trailpack-mandrill.git",
   "license": "Apache-2.0"
 }

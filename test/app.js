@@ -13,6 +13,16 @@ module.exports = _.defaultsDeep({
     services: { }
   },
   config: {
+    mandrill: {
+      // Mandrill API key
+      key: '-ynu-rQJlGEbvaKEIQS30w',
+      // Host name for sending eg. cal-style.com
+      host: 'cali-style.com',
+      // Protocol for sending eg. https or http
+      protocol: 'https',
+      // The ReplyTo field in Mandrill templates
+      replyTo: 'no_reply@cali-style.com'
+    },
     main: {
       packs: [
         smokesignals.Trailpack,
@@ -22,5 +32,3 @@ module.exports = _.defaultsDeep({
     }
   }
 }, smokesignals.FailsafeConfig)
-
-

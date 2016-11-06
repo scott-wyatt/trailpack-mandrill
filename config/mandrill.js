@@ -2,7 +2,7 @@
 
 module.exports = {
   // Mandrill API key
-  key: process.env.MANDRILL_KEY,
+  key: process.env.MANDRILL_APIKEY,
   // Host name for sending eg. cal-style.com
   host: process.env.MANDRILL_HOST,
   // Protocol for sending eg. https or http
