@@ -20,7 +20,7 @@ module.exports = class ManddrillService extends Service {
   _baseTemplateContent() {
     return [
       {
-        name: 'base',
+        name: 'domain',
         content: `${this.app.config.mandrill.protocol}://${this.app.config.mandrill.host}`
       }
     ]
@@ -32,7 +32,7 @@ module.exports = class ManddrillService extends Service {
     return {
       important: true,
       headers: {
-        'From': this.app.config.mandrill.replyTo,
+        'From-Address': this.app.config.mandrill.replyTo,
         'Reply-To': this.app.config.mandrill.replyTo
       }
     }
