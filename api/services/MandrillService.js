@@ -73,7 +73,10 @@ module.exports = class ManddrillService extends Service {
 
   sendTemplateMessage(message, options) {
     return new Promise((resolve, reject) => {
-
+      // Setup defaults
+      if (!options) {
+        options = {}
+      }
       // Constuct the Message Schema
       const messageSchema = joi.object().keys({
         to: joi.array().min(1).required(),
@@ -108,6 +111,58 @@ module.exports = class ManddrillService extends Service {
 
         // Send Sessage Template
         this._api().messages.sendTemplate(params, function(res) {
+          return resolve(res)
+        }, function(err) {
+          return reject(err)
+        })
+      })
+      .catch(err => {
+        return reject(err)
+      })
+    })
+  }
+
+  sendMessage(message, options) {
+    return new Promise((resolve, reject) => {
+      // Setup defaults
+      if (!options) {
+        options = {}
+      }
+      // Constuct the Message Schema
+      const messageSchema = joi.object().keys({
+        subject: joi.string().required(),
+        text: joi.string(),
+        html: joi.string(),
+        to: joi.array().min(1).required(),
+        global_merge_vars: joi.array(),
+        recipient_metadata: joi.array()
+      }).unknown()
+
+      // Construct the Options Schema
+      const optionsSchema = joi.object().keys({
+        template_content: joi.array()
+      }).unknown()
+
+      // Validate the Message
+      this._validate(message, messageSchema)
+      .then(value => {
+      // Validate the Options
+        return this._validate(options, optionsSchema)
+      })
+      .then(value => {
+
+        // Add the Defaults
+        const messageContent = _.defaults(message, this._baseMessage())
+        const templateContent = _.defaults(options.template_content, this._baseTemplateContent())
+
+        // Construct the Mandrill Message
+        const params = {
+          'template_content': templateContent, // fill all mc:edit
+          'message': messageContent
+        }
+
+        // Send Sessage Template
+        this._api().messages.send(params, function(res) {
           return resolve(res)
         }, function(err) {
           return reject(err)
