@@ -1,3 +1,4 @@
+/* eslint no-console: [0, { allow: ['log','warn', 'error'] }] */
 'use strict'
 
 const mandrill = require('mandrill-api/mandrill')
@@ -31,6 +32,7 @@ module.exports = class ManddrillService extends Service {
     return {
       important: true,
       headers: {
+        'From': this.app.config.mandrill.replyTo,
         'Reply-To': this.app.config.mandrill.replyTo
       }
     }
@@ -74,7 +76,7 @@ module.exports = class ManddrillService extends Service {
 
       // Constuct the Message Schema
       const messageSchema = joi.object().keys({
-        to: joi.array().required(),
+        to: joi.array().min(1).required(),
         global_merge_vars: joi.array(),
         recipient_metadata: joi.array()
       }).unknown()
@@ -88,21 +90,20 @@ module.exports = class ManddrillService extends Service {
       // Validate the Message
       this._validate(message, messageSchema)
       .then(value => {
-
       // Validate the Options
         return this._validate(options, optionsSchema)
       })
       .then(value => {
 
         // Add the Defaults
-        message = _.defaults(message, this._baseMessage())
+        const messageContent = _.defaults(message, this._baseMessage())
         const templateContent = _.defaults(options.template_content, this._baseTemplateContent())
 
         // Construct the Mandrill Message
         const params = {
           'template_name': options.template_name,
           'template_content': templateContent, // fill all mc:edit
-          'message': message
+          'message': messageContent
         }
 
         // Send Sessage Template
