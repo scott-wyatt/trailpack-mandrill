@@ -15,7 +15,7 @@ module.exports = _.defaultsDeep({
   config: {
     mandrill: {
       // Mandrill API key
-      key: '-ynu-rQJlGEbvaKEIQS30w',
+      key: process.env.MANDRILL_KEY,
       // Host name for sending eg. cal-style.com
       host: 'cali-style.com',
       // Protocol for sending eg. https or http
