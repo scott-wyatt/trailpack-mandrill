@@ -4,7 +4,7 @@
 const mandrill = require('mandrill-api/mandrill')
 const _ = require('lodash')
 const joi = require('joi')
-const Service = require('trails-service')
+const Service = require('trails/service')
 // const lib = require('../../lib')
 
 /**
