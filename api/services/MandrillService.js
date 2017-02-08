@@ -46,7 +46,7 @@ module.exports = class ManddrillService extends Service {
   }
 
   /**
-   * Mandrill API
+   * Mandrill Prevalidation
    */
   _validate(obj, schema) {
     return new Promise((resolve, reject) => {
@@ -77,7 +77,7 @@ module.exports = class ManddrillService extends Service {
       if (!options) {
         options = {}
       }
-      // Constuct the Message Schema
+      // Construct the Message Schema
       const messageSchema = joi.object().keys({
         to: joi.array().min(1).required(),
         global_merge_vars: joi.array(),
@@ -128,7 +128,7 @@ module.exports = class ManddrillService extends Service {
       if (!options) {
         options = {}
       }
-      // Constuct the Message Schema
+      // Construct the Message Schema
       const messageSchema = joi.object().keys({
         subject: joi.string().required(),
         text: joi.string(),
@@ -161,7 +161,7 @@ module.exports = class ManddrillService extends Service {
           'message': messageContent
         }
 
-        // Send Sessage Template
+        // Send Message Template
         this._api().messages.send(params, function(res) {
           return resolve(res)
         }, function(err) {
