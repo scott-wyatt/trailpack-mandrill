@@ -25,8 +25,6 @@ module.exports = _.defaultsDeep({
     },
     main: {
       packs: [
-        smokesignals.Trailpack,
-        require('trailpack-core'),
         require('../')
       ]
     }
